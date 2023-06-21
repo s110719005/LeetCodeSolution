@@ -9,8 +9,8 @@ using namespace std;
 */ 
 vector<int> findErrorNums(vector<int>& nums) 
 {
-    //! duplicate might not be consecutive
-    vector<int> duplicates;
+    vector<int> result;
+    vector<int> duplicatesCheck;
     int previousNum = 0;
     int currentNum = 0;
     int missingNum = 0;
@@ -20,16 +20,22 @@ vector<int> findErrorNums(vector<int>& nums)
         {
             missingNum = (i+1);
         }
+
+
         currentNum = nums[i];
-        if(currentNum == previousNum)
+        if(find(duplicatesCheck.begin(), duplicatesCheck.end(), (currentNum)) != duplicatesCheck.end())
         {
-            duplicates.push_back(currentNum);
+            result.push_back(currentNum);
+        }
+        else
+        {
+            duplicatesCheck.push_back(currentNum);
         }
         previousNum = nums[i];
     } 
-    duplicates.push_back(missingNum);
-    cout << duplicates[0] << "," << duplicates[1];
-    return duplicates;
+    result.push_back(missingNum);
+    cout << result[0] << "," << result[1];
+    return result;
 }
 int main()
 {
@@ -38,6 +44,6 @@ int main()
     vector<int> nums3 = {1,2,3,4,5,5,7};// d:5 missing 6
     vector<int> nums4 = {6,6,1,4,3,2,7};// d: 6 missing 5
     vector<int> nums5 = {2,3,2};// d: 2 missing 1
-    findErrorNums(nums4);
+    findErrorNums(nums5);
     return 0;
 }
